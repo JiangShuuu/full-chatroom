@@ -2,16 +2,43 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../assets/logo.svg'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Register() {
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  })
+
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 5000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark"
+  }
+
+  const handleChage = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value })
+  }
+
+  const handleValidation = () => {
+    const {password, confirmPassword, email, username } = values
+    if (password !== confirmPassword) {
+      toast.error("password and confirm password should be same.", toastOptions )
+    }
+    
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    handleValidation()
     alert("form")
   }
-  const handleChage = (e) => {
-    e.preventDefault()
-    console.log("change")
-  }
+
   return (
     <>
       <FormContainer>
@@ -23,11 +50,12 @@ export default function Register() {
           <input type="text" placeholder="Username" name='username' onChange={e => handleChage(e)}/>
           <input type="text" placeholder="Email" name='email' onChange={e => handleChage(e)}/>
           <input type="password" placeholder="Password" name='password' onChange={e => handleChage(e)}/>
-          <input type="password" placeholder="Confirm" name='ConfirmPassword' onChange={e => handleChage(e)}/>
+          <input type="password" placeholder="Confirm" name='confirmPassword' onChange={e => handleChage(e)}/>
           <button type="submit">Create User</button>
           <span>already have an account? <Link to="/login">Login</Link></span>
         </form>
       </FormContainer>
+      <ToastContainer />
     </>
   )
 }
