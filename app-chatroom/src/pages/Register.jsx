@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../assets/logo.svg'
 import { ToastContainer, toast } from 'react-toastify'
+import axios from 'axios'
+import registerRoute from '../utils/APIRoutes'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Register() {
@@ -29,14 +31,28 @@ export default function Register() {
     const {password, confirmPassword, email, username } = values
     if (password !== confirmPassword) {
       toast.error("password and confirm password should be same.", toastOptions )
+      return false
+    } else if (username < 3) {
+      toast.error('Username should be greater than 3 characters.', toastOptions)
+      return false
+    } else if (password.length < 8) {
+      toast.error('Password should be equal or greater than 8 characters.', toastOptions)
+      return false
+    } else if (email === "") {
+      toast.error('email is required', toastOptions)
+      return false
     }
-    
+    return true
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
-    handleValidation()
-    alert("form")
+    if (handleValidation()) {
+      const {password, confirmPassword, email, username } = values
+      const { data } = await axios.post(registerRoute, {
+        username, email, password
+      })
+    }
   }
 
   return (
