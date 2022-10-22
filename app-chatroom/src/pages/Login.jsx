@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../assets/logo.svg'
@@ -22,6 +22,12 @@ export default function Login() {
     draggable: true,
     theme: "dark"
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('chat-app-user')) {
+      navigate('/')
+    }
+  }, [])
 
   const handleChage = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value })
