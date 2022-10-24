@@ -1,7 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
+import { allUsersRoute } from "../utils/APIRoutes";
+import axios from 'axios';
 
 export default function Chat() {
+  const navigate = useNavigate()
+  const [contacts, setContacts] = useState([])
+  const [currentUser, setCurrentUser] = useState(undefined)
+
+  useEffect(() => {
+    const checkIsLogin = async () => {
+      if (!localStorage.getItem("chat-app-user")) {
+        navigate("/login");
+      } else {
+        setCurrentUser(
+          await JSON.parse(
+            localStorage.getItem("chat-app-user")
+          )
+        );
+      }
+    }
+    checkIsLogin()
+  }, [])
+
+  useEffect(() => {
+    const checkCurrentUser = async () => {
+      if (currentUser) {
+        if (currentUser.isAvatarImageSet) {
+          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`)
+          setContacts(data.data)
+        } else {
+          navigate('/setAvatar')
+        }
+      } 
+    }
+    checkCurrentUser()
+  }, [])
+
   return (
     <Container>
       <div className='container'></div>

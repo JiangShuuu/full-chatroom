@@ -27,7 +27,7 @@ export default function Login() {
     if (localStorage.getItem('chat-app-user')) {
       navigate('/')
     }
-  }, [])
+  }, [navigate])
 
   const handleChage = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value })
