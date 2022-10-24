@@ -23,8 +23,9 @@ export default function Chat() {
       }
     }
     checkIsLogin()
-  }, [])
+  }, [navigate])
 
+  
   useEffect(() => {
     const checkCurrentUser = async () => {
       if (currentUser) {
@@ -34,10 +35,10 @@ export default function Chat() {
         } else {
           navigate('/setAvatar')
         }
-      } 
+      }
     }
     checkCurrentUser()
-  }, [])
+  }, [currentUser, navigate])
 
   return (
     <Container>
