@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { allUsersRoute } from "../utils/APIRoutes";
 import axios from 'axios';
 import Contacts from '../components/Contacts'
+import Welcome from '../components/Welcome'
 
 export default function Chat() {
   const navigate = useNavigate()
   const [contacts, setContacts] = useState([])
   const [currentUser, setCurrentUser] = useState(undefined)
+  const [currentChat, setCurrentChat] = useState(undefined);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -40,10 +42,20 @@ export default function Chat() {
     checkCurrentUser()
   }, [currentUser, navigate])
 
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
+
   return (
     <Container>
       <div className='container'>
-        <Contacts contacts={contacts} currentUser={currentUser}></Contacts>
+        <Contacts contacts={contacts} changeChat={handleChatChange} />
+          {/* {currentChat === undefined ? (
+            <Welcome />
+          ) : (
+            <ChatContainer currentChat={currentChat} socket={socket} />
+          )} */}
+          <Welcome currentUser={currentUser}/>
       </div>
     </Container>
   )
