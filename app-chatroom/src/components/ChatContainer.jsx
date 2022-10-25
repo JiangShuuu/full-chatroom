@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-// import ChatInput from "./ChatInput";
+import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
 // import axios from "axios";
@@ -36,25 +36,26 @@ export default function ChatContainer({ currentChat, socket }) {
     getCurrentChat();
   }, [currentChat]);
 
-  // const handleSendMsg = async (msg) => {
-  //   const data = await JSON.parse(
-  //     localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //   );
-  //   socket.current.emit("send-msg", {
-  //     to: currentChat._id,
-  //     from: data._id,
-  //     msg,
-  //   });
-  //   await axios.post(sendMessageRoute, {
-  //     from: data._id,
-  //     to: currentChat._id,
-  //     message: msg,
-  //   });
+  const handleSendMsg = async (msg) => {
+    console.log(msg)
+    // const data = await JSON.parse(
+    //   localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+    // );
+    // socket.current.emit("send-msg", {
+    //   to: currentChat._id,
+    //   from: data._id,
+    //   msg,
+    // });
+    // await axios.post(sendMessageRoute, {
+    //   from: data._id,
+    //   to: currentChat._id,
+    //   message: msg,
+    // });
 
-  //   const msgs = [...messages];
-  //   msgs.push({ fromSelf: true, message: msg });
-  //   setMessages(msgs);
-  // };
+    // const msgs = [...messages];
+    // msgs.push({ fromSelf: true, message: msg });
+    // setMessages(msgs);
+  };
 
   // useEffect(() => {
   //   if (socket.current) {
@@ -105,7 +106,7 @@ export default function ChatContainer({ currentChat, socket }) {
           );
         })}
       </div>
-      {/* <ChatInput handleSendMsg={handleSendMsg} /> */}
+      <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
 }
