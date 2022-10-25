@@ -7,7 +7,7 @@ export default function Welcome() {
     const setUser = async () => {
     setUserName(
       await JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+        localStorage.getItem("chat-app-user")
       ).username
     )} 
 
