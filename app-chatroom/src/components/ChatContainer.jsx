@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import { sendMessageRoute, getAllMessageRoute } from "../utils/APIRoutes";
 
 
 export default function ChatContainer({ currentChat, currentUser, socket }) {
@@ -12,19 +12,19 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const data = await JSON.parse(
-  //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //     );
-  //     const response = await axios.post(recieveMessageRoute, {
-  //       from: data._id,
-  //       to: currentChat._id,
-  //     });
-  //     setMessages(response.data);
-  //   }
-  //   getData()
-  // }, [currentChat]);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await JSON.parse(
+        localStorage.getItem("chat-app-user")
+      );
+      const response = await axios.post(getAllMessageRoute, {
+        from: data._id,
+        to: currentChat._id,
+      });
+      setMessages(response.data);
+    }
+    getData()
+  }, [currentChat]);
 
   useEffect(() => {
     const getCurrentChat = async () => {
