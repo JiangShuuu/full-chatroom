@@ -3,10 +3,11 @@ import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
-// import axios from "axios";
-// import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import axios from "axios";
+import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 
-export default function ChatContainer({ currentChat, socket }) {
+
+export default function ChatContainer({ currentChat, currentUser, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -37,7 +38,7 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    console.log(msg)
+    // console.log(msg)
     // const data = await JSON.parse(
     //   localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     // );
@@ -46,11 +47,13 @@ export default function ChatContainer({ currentChat, socket }) {
     //   from: data._id,
     //   msg,
     // });
-    // await axios.post(sendMessageRoute, {
-    //   from: data._id,
-    //   to: currentChat._id,
-    //   message: msg,
-    // });
+    console.log(currentUser._id)
+    console.log(currentChat._id)
+    await axios.post(sendMessageRoute, {
+      from: currentUser._id,
+      to: currentChat._id,
+      message: msg,
+    });
 
     // const msgs = [...messages];
     // msgs.push({ fromSelf: true, message: msg });
