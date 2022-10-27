@@ -9,19 +9,21 @@ import { sendMessageRoute, getAllMessageRoute } from "../utils/APIRoutes";
 
 export default function ChatContainer({ currentChat, currentUser, socket }) {
   const [messages, setMessages] = useState([]);
-  const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const scrollRef = useRef();
 
   useEffect(() => {
     const getData = async () => {
-      const data = await JSON.parse(
-        localStorage.getItem("chat-app-user")
-      );
-      const response = await axios.post(getAllMessageRoute, {
-        from: data._id,
-        to: currentChat._id,
-      });
-      setMessages(response.data);
+      if (currentChat) {
+        const data = await JSON.parse(
+          localStorage.getItem("chat-app-user")
+        );
+        const response = await axios.post(getAllMessageRoute, {
+          from: data._id,
+          to: currentChat._id,
+        });
+        setMessages(response.data);
+      }
     }
     getData()
   }, [currentChat]);
@@ -38,35 +40,32 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    // console.log(msg)
-    // const data = await JSON.parse(
-    //   localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    // );
-    // socket.current.emit("send-msg", {
-    //   to: currentChat._id,
-    //   from: data._id,
-    //   msg,
-    // });
-    console.log(currentUser._id)
-    console.log(currentChat._id)
+    const data = await JSON.parse(
+      localStorage.getItem("chat-app-user")
+    );
+    socket.current.emit("send-msg", {
+      to: currentChat._id,
+      from: data._id,
+      message: msg,
+    });
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
     });
 
-    // const msgs = [...messages];
-    // msgs.push({ fromSelf: true, message: msg });
-    // setMessages(msgs);
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
   };
 
-  // useEffect(() => {
-  //   if (socket.current) {
-  //     socket.current.on("msg-recieve", (msg) => {
-  //       setArrivalMessage({ fromSelf: false, message: msg });
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
