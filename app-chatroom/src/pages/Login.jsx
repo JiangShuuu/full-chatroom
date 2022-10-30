@@ -70,10 +70,10 @@ export default function Login() {
             <img src={Logo} alt="" />
             <h1>chatRoom</h1>
           </div>
-          <input type="text" placeholder="Username" name='username' onChange={e => handleChage(e)}/>
-          <input type="password" placeholder="Password" name='password' onChange={e => handleChage(e)}/>
-          <button type="submit">Login</button>
-          <span>Don't have an account? <Link to="/register">Register</Link></span>
+          <input type="text" placeholder="使用者名稱" name='username' onChange={e => handleChage(e)}/>
+          <input type="password" placeholder="密碼" name='password' onChange={e => handleChage(e)}/>
+          <button type="submit">登入</button>
+          <span>沒有帳號嗎? <Link to="/register">註冊</Link></span>
         </form>
       </FormContainer>
       <ToastContainer />

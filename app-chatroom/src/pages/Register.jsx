@@ -78,12 +78,12 @@ export default function Register() {
             <img src={Logo} alt="" />
             <h1>chatRoom</h1>
           </div>
-          <input type="text" placeholder="Username" name='username' onChange={e => handleChage(e)}/>
-          <input type="text" placeholder="Email" name='email' onChange={e => handleChage(e)}/>
-          <input type="password" placeholder="Password" name='password' onChange={e => handleChage(e)}/>
-          <input type="password" placeholder="Confirm" name='confirmPassword' onChange={e => handleChage(e)}/>
-          <button type="submit">Create User</button>
-          <span>already have an account? <Link to="/login">Login</Link></span>
+          <input type="text" placeholder="使用者名稱(登入)" name='username' onChange={e => handleChage(e)}/>
+          <input type="text" placeholder="Email信箱" name='email' onChange={e => handleChage(e)}/>
+          <input type="password" placeholder="密碼" name='password' onChange={e => handleChage(e)}/>
+          <input type="password" placeholder="密碼確認" name='confirmPassword' onChange={e => handleChage(e)}/>
+          <button type="submit">創建帳號</button>
+          <span>已經有帳號了嗎? <Link to="/login">登入</Link></span>
         </form>
       </FormContainer>
       <ToastContainer />
@@ -134,6 +134,7 @@ const FormContainer = styled.div`
       }
       &::placeholder {
         color: ${props => props.theme.textColor};
+        opacity: 0.6;
       }
     }
     button {
