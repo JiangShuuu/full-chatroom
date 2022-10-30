@@ -58,7 +58,11 @@ export default function Chat() {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
           const data = await axios.get(`${allUsersRoute}/${currentUser._id}`)
-          setContacts(data.data)
+          const isOnline = false
+          const newData = data.data.map(item => {
+            return {...item, isOnline}
+          })
+          setContacts(newData)
         } else {
           navigate('/setAvatar')
         }

@@ -50,7 +50,9 @@ export default function Contacts({contacts, currentUser, changeChat}) {
                   <div className="username">
                     <h3>{contact.username}</h3>
                   </div>
-                  <div className='online'></div>
+                  {
+                    contact.isOnline ? <div className='online'></div> : ""
+                  }
                 </div>
               );
             })}
