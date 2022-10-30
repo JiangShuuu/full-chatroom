@@ -50,6 +50,7 @@ export default function Contacts({contacts, currentUser, changeChat}) {
                   <div className="username">
                     <h3>{contact.username}</h3>
                   </div>
+                  <div className='online'></div>
                 </div>
               );
             })}
@@ -123,6 +124,19 @@ const Container = styled.div`
       .username {
         h3 {
           color: white;
+        }
+      }
+      .online {
+        position: relative;
+        &::before {
+          position: absolute;
+          content: "";
+          top: -18px;
+          left: -10px;
+          width: 10px;
+          height: 10px;
+          background-color: #04c904;
+          border-radius: 100%;
         }
       }
     }
