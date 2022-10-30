@@ -64,6 +64,7 @@ io.on("connection", (socket) => {
     onlineUsers.forEach((value, key) => {
       if (socket.id === value) {
         socket.broadcast.emit('getUserLeave', key)
+        onlineUsers.delete(key)
       }
     })
   })
