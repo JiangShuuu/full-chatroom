@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Robot from "../assets/robot.gif";
+import Robot from "../assets/robot02.gif";
 export default function Welcome() {
   const [userName, setUserName] = useState("");
   useEffect(() => {
@@ -17,15 +17,16 @@ export default function Welcome() {
     <Container>
       <img src={Robot} alt="" />
       <h1>
-        Welcome, <span>{userName}!</span>
+        歡迎, <span>{userName}!</span>
       </h1>
-      <h3>Please select a chat to Start messaging.</h3>
+      <h3>請選擇對話窗開始聊天!</h3>
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
   color: white;

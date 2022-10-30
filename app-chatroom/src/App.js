@@ -10,12 +10,12 @@ import { BsSun, BsMoon } from 'react-icons/bs'
 const defaultMode = {
   textColor:'white',
   backgroundColor:'#8BBDC5',
-  sidebarColor: '#66cdaa',
+  sidebarColor: '#32617A',
 }
 const darkMode = {
   textColor:'gray',
   backgroundColor:'#131324',
-  sidebarColor: '#131324',
+  sidebarColor: '#131954',
 }
 
 export default function App() {
