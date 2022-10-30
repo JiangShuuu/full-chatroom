@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
     socket.emit("getUserList", list)
 
     // 傳送給其他使用者
-    socket.broadcast.emit('getUserss', userId)
+    socket.broadcast.emit('getUserJoin', userId)
   })
 
   socket.on("send-msg", (data) => {
@@ -61,5 +61,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", (reason) => {
     console.log(reason)
+    onlineUsers.forEach((value, key) => {
+      if (socket.id === value) {
+        socket.broadcast.emit('getUserLeave', key)
+      }
+    })
   })
 })

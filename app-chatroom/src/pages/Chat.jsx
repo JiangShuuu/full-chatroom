@@ -39,11 +39,17 @@ export default function Chat() {
       socket.current.on("getUserList", (data) => {
         console.log('list', data)
       })
-      
-      // 獲取其他加入使用者
-      socket.current.on("getUserss", (data) => {
-        console.log(data)
+
+      // 獲取其他加入使用者進入
+      socket.current.on("getUserJoin", (data) => {
+        console.log('join', data)
       })
+      
+      // 獲取其他使用者離開
+      socket.current.on("getUserLeave", (data) => {
+        console.log('leave', data)
+      })
+
     }
   }, [currentUser])
   
