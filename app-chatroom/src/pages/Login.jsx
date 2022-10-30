@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import Logo from '../assets/logo.svg'
+import Logo from '../assets/logo03.png'
 import { ToastContainer, toast } from 'react-toastify'
 import axios from 'axios'
 import { liginRoute } from '../utils/APIRoutes'
@@ -68,7 +68,7 @@ export default function Login() {
         <form onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="" />
-            <h1>snappy</h1>
+            <h1>chatRoom</h1>
           </div>
           <input type="text" placeholder="Username" name='username' onChange={e => handleChage(e)}/>
           <input type="password" placeholder="Password" name='password' onChange={e => handleChage(e)}/>
