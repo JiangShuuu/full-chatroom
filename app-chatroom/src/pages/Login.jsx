@@ -100,7 +100,7 @@ const FormContainer = styled.div`
     }
     h1 {
       color: white;
-      text-teansform: uppercase;
+      text-transform: uppercase;
     }
   }
   form {
@@ -121,6 +121,9 @@ const FormContainer = styled.div`
       &:focus {
         border: .1rem solid #997af0;
         outline: none;
+      }
+      &::placeholder {
+        color: ${props => props.theme.textColor};
       }
     }
     button {

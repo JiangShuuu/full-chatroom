@@ -14,7 +14,7 @@ export default function Register() {
       if (localStorage.getItem('chat-app-user')) {
         navigate('/')
       }
-    }, [])
+    }, [navigate])
 
   const [values, setValues] = useState({
     username: "",
@@ -110,7 +110,7 @@ const FormContainer = styled.div`
     }
     h1 {
       color: white;
-      text-teansform: uppercase;
+      text-transform: uppercase;
     }
   }
   form {
