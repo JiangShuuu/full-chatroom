@@ -89,7 +89,7 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: ${props => props.theme.backgroundColor};
   .brand {
     display: flex;
     align-items: center;

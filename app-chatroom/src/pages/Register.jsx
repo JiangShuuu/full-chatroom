@@ -99,7 +99,7 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: ${props => props.theme.backgroundColor};
   .brand {
     display: flex;
     align-items: center;
@@ -125,12 +125,15 @@ const FormContainer = styled.div`
       padding: 1rem;
       border: 0.1rem solid #4e0eff;
       border-radius: 0.4rem;
-      color: white;
+      color: #f8f8f8;
       width: 100%;
       font-size: 1rem;
       &:focus {
         border: .1rem solid #997af0;
         outline: none;
+      }
+      &::placeholder {
+        color: ${props => props.theme.textColor};
       }
     }
     button {
