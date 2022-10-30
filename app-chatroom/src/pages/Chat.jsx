@@ -34,6 +34,16 @@ export default function Chat() {
     if (currentUser) {
       socket.current = io(host)
       socket.current.emit("add-user", currentUser._id)
+
+      // 獲取目前使用者清單
+      socket.current.on("getUserList", (data) => {
+        console.log('list', data)
+      })
+      
+      // 獲取其他加入使用者
+      socket.current.on("getUserss", (data) => {
+        console.log(data)
+      })
     }
   }, [currentUser])
   

@@ -37,8 +37,19 @@ global.onlineUsers = new Map()
 
 io.on("connection", (socket) => {
   global.chatSocket = socket;
+  
   socket.on("add-user", (userId) => {
     onlineUsers.set(userId, socket.id)
+
+    // 傳送目前使用者清單
+    const list = []
+    onlineUsers.forEach((value, key) => {
+      list.push(key)
+    })
+    socket.emit("getUserList", list)
+
+    // 傳送給其他使用者
+    socket.broadcast.emit('getUserss', userId)
   })
 
   socket.on("send-msg", (data) => {
@@ -46,5 +57,9 @@ io.on("connection", (socket) => {
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
+  })
+
+  socket.on("disconnect", (reason) => {
+    console.log(reason)
   })
 })
