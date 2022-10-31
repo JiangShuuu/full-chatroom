@@ -73,7 +73,8 @@ module.exports.getAllUsers = async (req, res, next) => {
       "email",
       "username",
       "avatarImage",
-      "_id"
+      "_id",
+      "isOnline"
     ])
     return res.json(users)
   } catch (err) {

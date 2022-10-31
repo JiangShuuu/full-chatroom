@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import { allUsersRoute, host } from "../utils/APIRoutes";
@@ -15,7 +15,10 @@ export default function Chat() {
   const [currentUser, setCurrentUser] = useState(undefined)
   const [currentChat, setCurrentChat] = useState(undefined);
 
+  const [socketList, setSocketList] = useState([])
+
   useEffect(() => {
+    // check()
     const checkIsLogin = async () => {
       if (!localStorage.getItem("chat-app-user")) {
         navigate("/login");
@@ -31,29 +34,6 @@ export default function Chat() {
   }, [navigate])
 
   useEffect(() => {
-    if (currentUser) {
-      socket.current = io(host)
-      socket.current.emit("add-user", currentUser._id)
-
-      // 獲取目前使用者清單
-      socket.current.on("getUserList", (data) => {
-        console.log('list', data)
-      })
-
-      // 獲取其他加入使用者進入
-      socket.current.on("getUserJoin", (data) => {
-        console.log('join', data)
-      })
-      
-      // 獲取其他使用者離開
-      socket.current.on("getUserLeave", (data) => {
-        console.log('leave', data)
-      })
-
-    }
-  }, [currentUser])
-  
-  useEffect(() => {
     const checkCurrentUser = async () => {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
@@ -66,6 +46,52 @@ export default function Chat() {
     }
     checkCurrentUser()
   }, [currentUser, navigate])
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host)
+      socket.current.emit("add-user", currentUser._id)
+
+      // 獲取目前使用者清單
+      socket.current.on("getUserList", (data) => {
+        console.log('list', data)
+        setSocketList(data)
+      })
+
+      // 獲取其他加入使用者進入
+      socket.current.on("getUserJoin", (data) => {
+        console.log('join', data)
+        // socketList.push(data)
+        setSocketList([...socketList, data]);
+        // setSocketList(socketList)
+      })
+      
+      // 獲取其他使用者離開
+      socket.current.on("getUserLeave", (data) => {
+        console.log('leave', data, socketList)
+        // const offlineList = socketList.filter((item) => item !== data)
+        // console.log(offlineList)
+        // setSocketList(offlineList)
+      })
+
+    }
+  }, [currentUser])
+  
+  useEffect(() => {
+    if (socketList) {
+      const onlineContacts = contacts.map((item) => {
+        if (socketList.includes(item._id)) {
+          console.log('hi')
+          item.isOnline = true
+        } else {
+          item.isOnline = false
+        }
+        return item
+      })
+      setContacts(onlineContacts)
+    }
+  }, [socketList])
+
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
