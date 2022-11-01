@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import { allUsersRoute, host } from "../utils/APIRoutes";
@@ -61,34 +61,29 @@ export default function Chat() {
       // 獲取其他加入使用者進入
       socket.current.on("getUserJoin", (data) => {
         console.log('join', data)
-        // socketList.push(data)
         setSocketList(socketList => [...socketList, data]);
-        // setSocketList(socketList)
       })
       
       // 獲取其他使用者離開
       socket.current.on("getUserLeave", (data) => {
-        console.log('leave', data, socketList)
-        // const offlineList = socketList.filter((item) => item !== data)
-        // console.log(offlineList)
-        // setSocketList(offlineList)
+        console.log('leave', data)
+        setSocketList(socketList => socketList.filter((item) => item !== data))
       })
-
     }
   }, [currentUser])
   
   useEffect(() => {
     if (socketList) {
-      const onlineContacts = contacts.map((item) => {
-        if (socketList.includes(item._id)) {
-          console.log('hi')
-          item.isOnline = true
-        } else {
-          item.isOnline = false
-        }
-        return item
+      setContacts(contacts => {
+        return contacts.map((item) => {
+          if (socketList.includes(item._id)) {
+            item.isOnline = true
+          } else {
+            item.isOnline = false
+          }
+          return item
+        })
       })
-      setContacts(onlineContacts)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketList])
