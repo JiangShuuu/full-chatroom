@@ -45,7 +45,8 @@ export default function Chat() {
       }
     }
     checkCurrentUser()
-  }, [currentUser, navigate])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser])
 
   useEffect(() => {
     if (currentUser) {
