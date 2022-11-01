@@ -62,7 +62,7 @@ export default function Chat() {
       socket.current.on("getUserJoin", (data) => {
         console.log('join', data)
         // socketList.push(data)
-        setSocketList([...socketList, data]);
+        setSocketList(socketList => [...socketList, data]);
         // setSocketList(socketList)
       })
       
@@ -90,6 +90,7 @@ export default function Chat() {
       })
       setContacts(onlineContacts)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketList])
 
 
